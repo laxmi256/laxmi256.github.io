@@ -418,8 +418,7 @@ var resizePizzas = function(size) {
           console.log("bug in sizeSwitcher");
       }
 	  
-	var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
-	
+	 var randomPizzas = document.querySelectorAll(".randomPizzaContainer");		
 	for (var i = 0; i < randomPizzas.length; i++) {
       randomPizzas[i].style.width = newwidth + "%";
 	}
@@ -438,9 +437,10 @@ window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
+var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
+
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
@@ -469,12 +469,13 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame"); 
+  // use getElementsByClassName instead of querySelectorAll
+  // take var definitions outside for loop
   var items = document.getElementsByClassName('mover');
-  //var top = (document.body.scrollTop)/1250;
-  var top = (document.body.scrollTop)/1250;
-  var positionArray = [];
+  var top = (document.body.scrollTop) / 1250;
   var i;
-  var phase = [];;
+  var phase = [];
+  // Take the call to Math.sin() out of the main for loop and only call it 5 times
   for (i = 0; i < 5; i++) {
 	  phase.push(Math.sin(top + i % 5));
   }
@@ -492,13 +493,16 @@ function updatePositions() {
   }
 }
 
+// Added for storing the total randomn pizza count
 var totalPizzas = 0;
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
+// only create visible pizzas
+// Removed the height and width styles from this function and added them in style.css
 document.addEventListener('DOMContentLoaded', function() {
-	
+// Reduced the rows size as only 4 rows are visible at a time	
   var cols = 8;
   var rows = 4;
   colWidth = window.innerWidth / cols;
