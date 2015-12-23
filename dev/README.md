@@ -61,8 +61,6 @@
 
 5. Added async tag to analytics.js and perfmatters.js
 
-6. Minified index.html
-
 
 ##Steps taken for Optimizing main.js
 ------------------------------------
